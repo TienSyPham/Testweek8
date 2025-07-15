@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Expanded(
                   child: TextField(
                     controller: _taskController,
-                    decoration: const InputDecoration(labelText: 'New To-Do Task'),
+                    decoration: const InputDecoration(labelText: 'Week 8 To-Do Task'),
                   ),
                 ),
                 const SizedBox(width: 10),
