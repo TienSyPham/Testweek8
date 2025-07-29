@@ -1,27 +1,34 @@
-name: lab7
-description: "A new Flutter project."
+name: lab9_week8
+description: "Week 8 lab"
+
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.7.2 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  floor: ^1.4.0
+  # Core UI packages
   cupertino_icons: ^1.0.8
-  sqflite_common_ffi_web: ^0.4.5+4
+
+  # Floor (SQLite abstraction) & sqflite engine
+  floor: ^1.4.0
+  sqflite: ^2.2.8+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  floor_generator: ^1.4.0
-  build_runner: ^2.1.2
+  # Lints
   flutter_lints: ^5.0.0
+
+  # Codegen for Floor
+  floor_generator: ^1.4.0
+  build_runner: ^2.5.4
 
 flutter:
   uses-material-design: true
