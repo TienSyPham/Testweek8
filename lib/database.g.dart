@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_database.dart';
+part of 'database.dart';
 
 // **************************************************************************
 // FloorGenerator
@@ -72,7 +72,7 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  ToDoItemDao? _todoDaoInstance;
+  TodoDao? _todoDaoInstance;
 
   Future<sqflite.Database> open(
     String path,
@@ -96,7 +96,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ToDoItem` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `task` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `TodoItem` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `qty` INTEGER NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -105,27 +105,33 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  ToDoItemDao get todoDao {
-    return _todoDaoInstance ??= _$ToDoItemDao(database, changeListener);
+  TodoDao get todoDao {
+    return _todoDaoInstance ??= _$TodoDao(database, changeListener);
   }
 }
 
-class _$ToDoItemDao extends ToDoItemDao {
-  _$ToDoItemDao(
+class _$TodoDao extends TodoDao {
+  _$TodoDao(
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _toDoItemInsertionAdapter = InsertionAdapter(
+        _todoItemInsertionAdapter = InsertionAdapter(
             database,
-            'ToDoItem',
-            (ToDoItem item) =>
-                <String, Object?>{'id': item.id, 'task': item.task}),
-        _toDoItemDeletionAdapter = DeletionAdapter(
+            'TodoItem',
+            (TodoItem item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'qty': item.qty
+                }),
+        _todoItemDeletionAdapter = DeletionAdapter(
             database,
-            'ToDoItem',
+            'TodoItem',
             ['id'],
-            (ToDoItem item) =>
-                <String, Object?>{'id': item.id, 'task': item.task});
+            (TodoItem item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'qty': item.qty
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -133,24 +139,27 @@ class _$ToDoItemDao extends ToDoItemDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<ToDoItem> _toDoItemInsertionAdapter;
+  final InsertionAdapter<TodoItem> _todoItemInsertionAdapter;
 
-  final DeletionAdapter<ToDoItem> _toDoItemDeletionAdapter;
+  final DeletionAdapter<TodoItem> _todoItemDeletionAdapter;
 
   @override
-  Future<List<ToDoItem>> findAllItems() async {
-    return _queryAdapter.queryList('SELECT * FROM ToDoItem',
-        mapper: (Map<String, Object?> row) =>
-            ToDoItem(id: row['id'] as int?, task: row['task'] as String));
+  Future<List<TodoItem>> findAllItems() async {
+    return _queryAdapter.queryList('SELECT * FROM TodoItem',
+        mapper: (Map<String, Object?> row) => TodoItem(
+            id: row['id'] as int?,
+            name: row['name'] as String,
+            qty: row['qty'] as int));
   }
 
   @override
-  Future<void> insertItem(ToDoItem item) async {
-    await _toDoItemInsertionAdapter.insert(item, OnConflictStrategy.abort);
+  Future<int> insertItem(TodoItem item) {
+    return _todoItemInsertionAdapter.insertAndReturnId(
+        item, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> deleteItem(ToDoItem item) async {
-    await _toDoItemDeletionAdapter.delete(item);
+  Future<void> deleteItem(TodoItem item) async {
+    await _todoItemDeletionAdapter.delete(item);
   }
 }
